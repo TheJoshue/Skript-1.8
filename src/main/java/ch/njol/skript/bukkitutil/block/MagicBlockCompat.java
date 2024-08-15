@@ -24,10 +24,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -192,6 +194,18 @@ public class MagicBlockCompat implements BlockCompat {
 	@Override
 	public BlockValues getBlockValues(BlockState block) {
 		return new MagicBlockValues(block);
+	}
+
+	@Override
+	public @Nullable BlockValues getBlockValues(Material material) {
+		if (material.isBlock())
+			return new NewBlockCompat.NewBlockValues(material, Bukkit.createBlockData(material), true);
+		return null;
+	}
+
+	@Override
+	public @Nullable BlockValues getBlockValues(BlockData blockData) {
+		return new NewBlockCompat.NewBlockValues(blockData.getMaterial(), blockData, false);
 	}
 
 	@SuppressWarnings("deprecation")
