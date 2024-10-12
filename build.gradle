@@ -28,8 +28,8 @@ allprojects {
 
 dependencies {
 	shadow group: 'org.bstats', name: 'bstats-bukkit', version: '3.0.0'
-	shadow group: 'com.h2database', name: 'h2', version: project.property('h2.version')
-	shadow group: 'com.zaxxer', name: 'HikariCP', version: project.property('hikaricp.version')
+	shadow group: 'com.h2database', name: 'h2', version: '2.3.232'
+	shadow group: 'com.zaxxer', name: 'HikariCP', version: '5.1.0'
 	implementation group: 'io.papermc.paper', name: 'paper-api', version: '1.19.2-R0.1-SNAPSHOT'
 	implementation group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version: '2.2.600'
 	implementation group: 'com.google.code.findbugs', name: 'findbugs', version: '3.0.1'
@@ -63,11 +63,6 @@ task jar(overwrite: true, type: ShadowJar) {
 task build(overwrite: true, type: ShadowJar) {
 	archiveName jarName ? 'Skript.jar' : jarName
 	from sourceSets.main.output
-
-    dependencies {
-        include(dependency('com.h2database:h2'))
-        include(dependency('com.zaxxer:HikariCP'))
-    }
 }
 
 task relocateShadowJar(type: ConfigureShadowRelocation) {
@@ -87,6 +82,8 @@ tasks.withType(ShadowJar) {
 	dependencies {
 		include(dependency('org.bstats:bstats-bukkit'))
 		include(dependency('org.bstats:bstats-base'))
+        include(dependency('com.h2database:h2'))
+        include(dependency('com.zaxxer:HikariCP'))
 	}
 	relocate 'org.bstats', 'ch.njol.skript.bstats'
 	manifest {
