@@ -12,7 +12,7 @@ plugins {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	options.compilerArgs += ["-source", "17", "-target", "17"]
+	options.compilerArgs += ["-source", "21", "-target", "17"]
 }
 
 allprojects {
