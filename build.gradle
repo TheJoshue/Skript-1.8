@@ -63,6 +63,11 @@ task jar(overwrite: true, type: ShadowJar) {
 task build(overwrite: true, type: ShadowJar) {
 	archiveName jarName ? 'Skript.jar' : jarName
 	from sourceSets.main.output
+
+    dependencies {
+        include(dependency('com.h2database:h2'))
+        include(dependency('com.zaxxer:HikariCP'))
+    }
 }
 
 task relocateShadowJar(type: ConfigureShadowRelocation) {
