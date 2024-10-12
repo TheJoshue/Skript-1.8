@@ -27,7 +27,7 @@ import ch.njol.util.NonNullPair;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.yggdrasil.YggdrasilSerializable;
 
-import org.jcp.xml.dsig.internal.dom.Utils;
+//import org.jcp.xml.dsig.internal.dom.Utils; // original
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
 import org.jetbrains.annotations.Nullable;
@@ -156,7 +156,8 @@ public class Timespan implements YggdrasilSerializable, Comparable<Timespan>, Te
 				offset = 1;
 
 			for (int i = 0; i < substring.length; i++) {
-				t += times[offset + i] * Utils.parseLong("" + substring[i]);
+				//t += times[offset + i] * Utils.parseLong("" + substring[i]); // original
+				t += times[offset + i] * Long.parseLong(substring[i]);
 			}
 		} else { // <number> minutes/seconds/.. etc
 			String[] substring = value.toLowerCase(Locale.ENGLISH).split("\\s+");
