@@ -298,7 +298,8 @@ public class Variable<T> implements Expression<T> {
 		String n = name.toString(e);
 		if (n.endsWith(Variable.SEPARATOR + "*") != list) // prevents e.g. {%expr%} where "%expr%" ends with "::*" from returning a Map
 			return null;
-		Object val = !list ? convertIfOldPlayer(n, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local);
+		//Object val = !list ? convertIfOldPlayer(n, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local); // original
+		Object value = !list ? convertIfOldPlayer(n, local, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local); // modified
 		if (val == null)
 			return Variables.getVariable((local ? LOCAL_VARIABLE_TOKEN : "") + name.getDefaultVariableName(), e, false);
 		return val;
@@ -322,7 +323,8 @@ public class Variable<T> implements Expression<T> {
 				else
 					o = v.getValue();
 				if (o != null)
-					l.add(convertIfOldPlayer(name + v.getKey(), e, o));
+					//l.add(convertIfOldPlayer(name + v.getKey(), e, o)); // original
+					l.add(convertIfOldPlayer(name + v.getKey(), local, e, o)); // modified
 			}
 		}
 		return l.toArray();
@@ -335,6 +337,17 @@ public class Variable<T> implements Expression<T> {
 	 * because the player object inside the variable will be a (kinda) dead variable
 	 * as a new player object has been created by the server.
 	 */
+	/*@Nullable Object convertIfOldPlayer(String key, Event event, @Nullable Object t){
+		if(SkriptConfig.enablePlayerVariableFix.value() && t != null && t instanceof Player){
+			Player p = (Player) t;
+			if(!p.isValid() && p.isOnline()){
+				Player player = uuidSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
+				Variables.setVariable(key, player, event, local);
+				return player;
+			}
+		}
+		return t;
+	}*/
 	public static <T> @Nullable T convertIfOldPlayer(String key, boolean local, Event event, @Nullable T object) {
 		if (SkriptConfig.enablePlayerVariableFix.value() && object instanceof Player oldPlayer) {
 			if (!oldPlayer.isValid() && oldPlayer.isOnline()) {
@@ -371,7 +384,8 @@ public class Variable<T> implements Expression<T> {
 				while (keys.hasNext()) {
 					key = keys.next();
 					if (key != null) {
-						next = convertIfOldPlayer(name + key, e, Variables.getVariable(name + key, e, local));
+						//next = convertIfOldPlayer(name + key, e, Variables.getVariable(name + key, e, local)); // original
+						next = convertIfOldPlayer(name + key, local, e, Variables.getVariable(name + key, e, local)); // modified
 						if (next != null && !(next instanceof TreeMap))
 							return true;
 					}
@@ -426,7 +440,8 @@ public class Variable<T> implements Expression<T> {
 					key = keys.next();
 					if (key != null) {
 						next = Converters.convert(Variables.getVariable(name + key, e, local), types);
-						next = (T) convertIfOldPlayer(name + key, e, next);
+						//next = (T) convertIfOldPlayer(name + key, e, next); // original
+						next = (T) convertIfOldPlayer(name + key, local, e, next); // modified
 						if (next != null && !(next instanceof TreeMap))
 							return true;
 					}
