@@ -37,8 +37,8 @@ dependencies {
 	}
 
 	// Libraries that are installed at runtime. See plugin.yml 'libraries' section.
-	implementation group: 'com.h2database', name: 'h2', version: project.property('h2.version')
-	implementation group: 'com.zaxxer', name: 'HikariCP', version: project.property('hikaricp.version')
+	shadow group: 'com.h2database', name: 'h2', version: project.property('h2.version')
+	shadow group: 'com.zaxxer', name: 'HikariCP', version: project.property('hikaricp.version')
 
 	implementation fileTree(dir: 'lib', include: '*.jar')
 }
