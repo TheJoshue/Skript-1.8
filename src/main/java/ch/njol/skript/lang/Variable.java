@@ -299,7 +299,7 @@ public class Variable<T> implements Expression<T> {
 		if (n.endsWith(Variable.SEPARATOR + "*") != list) // prevents e.g. {%expr%} where "%expr%" ends with "::*" from returning a Map
 			return null;
 		//Object val = !list ? convertIfOldPlayer(n, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local); // original
-		Object value = !list ? convertIfOldPlayer(n, local, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local); // modified
+		Object val = !list ? convertIfOldPlayer(n, local, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local); // modified
 		if (val == null)
 			return Variables.getVariable((local ? LOCAL_VARIABLE_TOKEN : "") + name.getDefaultVariableName(), e, false);
 		return val;
