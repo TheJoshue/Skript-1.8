@@ -12,7 +12,7 @@ plugins {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	options.compilerArgs += ["-source", "11", "-target", "11"]
+	options.compilerArgs += ["-source", "17", "-target", "17"]
 }
 
 allprojects {
@@ -28,8 +28,8 @@ allprojects {
 
 dependencies {
 	shadow group: 'org.bstats', name: 'bstats-bukkit', version: '3.0.0'
-	shadow group: 'com.h2database', name: 'h2', version: '2.3.232'
-	shadow group: 'com.zaxxer', name: 'HikariCP', version: '5.1.0'
+	shadow group: 'com.h2database', name: 'h2', version: '2.1.214'
+	shadow group: 'com.zaxxer', name: 'HikariCP', version: '5.0.1'
 	implementation group: 'io.papermc.paper', name: 'paper-api', version: '1.19.2-R0.1-SNAPSHOT'
 	implementation group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version: '2.2.600'
 	implementation group: 'com.google.code.findbugs', name: 'findbugs', version: '3.0.1'
