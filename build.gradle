@@ -82,8 +82,8 @@ tasks.withType(ShadowJar) {
 	dependencies {
 		include(dependency('org.bstats:bstats-bukkit'))
 		include(dependency('org.bstats:bstats-base'))
-        include(dependency('com.zaxxer:HikariCP:5.1.0'))
-        include(dependency('com.h2database:h2:2.3.232'))
+        include(dependency('com.zaxxer:HikariCP'))
+        include(dependency('com.h2database:h2'))
 	}
 	relocate 'org.bstats', 'ch.njol.skript.bstats'
 	manifest {
