@@ -151,11 +151,11 @@ public class ExprBurnCookTime extends PropertyExpression<Block, Timespan> {
 			FurnaceBurnEvent event = (FurnaceBurnEvent) e;
 			//event.setBurnTime(value.apply(Timespan.fromTicks_i(event.getBurnTime())).getTicks()); // original
 			//event.setBurnTime((int) value.apply(Timespan.fromTicks_i(event.getBurnTime())).getTicks()); // modified with explicit cast
-			long ticks = value.apply(Timespan.fromTicks_i(event.getBurnTime())).getTicks();  // Line 151
-			if (ticks > Integer.MAX_VALUE) {  // Line 152
-    			event.setBurnTime(Integer.MAX_VALUE);  // Line 153 (overflow handling)
+			long ticks = value.apply(Timespan.fromTicks_i(event.getBurnTime())).getTicks(); // modified with overflow handling and safe casting
+			if (ticks > Integer.MAX_VALUE) {
+    			event.setBurnTime(Integer.MAX_VALUE);
 			} else {  
-    			event.setBurnTime((int) ticks);  // Line 154 (safe casting)
+    			event.setBurnTime((int) ticks);
 			}
 			return;
 		}
